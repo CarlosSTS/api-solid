@@ -2,38 +2,45 @@
 
 ## Dependências
 
-> ```bash
-> npm i typescript @types/node tsx tsup -D
-> ```
+```bash
+npm i typescript @types/node tsx tsup -D
+```
 
-> ```bash
->  npm i fastify
-> ```
+```bash
+npm i fastify
+```
 
-> ```bash
->  npm i dotenv
-> ```
+```bash
+npm i dotenv
+```
 
-> ```bash
->  npm i zod
-> ```
+```bash
+npm i zod
+```
 
-> ```bash
->  npm i eslint -D 
-> ```
+```bash
+npm i eslint -D
+```
 
-> ```bash
->  npm i eslint-config-prettier -D 
-> ```
+```bash
+npm i eslint-config-prettier -D
+```
 
-> ```bash
->  npm i eslint-plugin-prettier -D 
-> ```
+```bash
+npm i eslint-plugin-prettier -D
+```
 
-> ```bash
->  npm i typescript-eslint -D 
-> ```
+```bash
+npm i typescript-eslint -D
+```
 
+```bash
+npm i prisma -D
+```
+
+```bash
+npm i @prisma/client
+```
 
 ## Alteração necessária no `package.json`
 
@@ -56,7 +63,7 @@ Esta configuração habilita o suporte a **ES Modules**, permitindo que o TypeSc
 ## Configuração do `tsconfig.json`
 
 > **Nota:** Caso o arquivo `tsconfig.json` não exista no projeto, crie-o executando:
->
+
 > ```bash
 > npx tsc --init
 > ```
@@ -93,4 +100,28 @@ Para facilitar os imports e evitar caminhos relativos longos como `../../../`, a
 }
 ```
 
-**Benefício:** Torna os imports mais limpos, legíveis e fáceis de manter, independente da profundidade do arquivo. 
+**Benefício:** Torna os imports mais limpos, legíveis e fáceis de manter, independente da profundidade do arquivo.
+
+## Configuração do Prisma
+
+### Inicializar o Prisma
+
+```bash
+npx prisma init
+```
+
+Este comando cria a estrutura inicial do Prisma no projeto:
+
+- Pasta `prisma/` com o arquivo `schema.prisma`
+- Arquivo `.env` com a variável `DATABASE_URL`
+
+### Gerar tipagens do Prisma Client
+
+```bash
+npx prisma generate
+```
+
+**O que faz:** Cria automaticamente as tipagens TypeScript baseadas no seu `schema.prisma`, gerando o Prisma Client com auto-complete e type-safety para todas as suas models.
+
+**Quando usar:** Execute este comando sempre que modificar o `schema.prisma` para atualizar as tipagens.
+
