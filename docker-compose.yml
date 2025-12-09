@@ -2,7 +2,7 @@
 
 services:
   db:
-    image: postgres:17
+    image: bitnamilegacy/postgresql:17
     container_name: api-solid-pg
     environment:
       POSTGRESQL_USERNAME: docker
