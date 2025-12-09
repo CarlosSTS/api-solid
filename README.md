@@ -125,3 +125,33 @@ npx prisma generate
 
 **Quando usar:** Execute este comando sempre que modificar o `schema.prisma` para atualizar as tipagens.
 
+### Criar e aplicar migrations
+
+```bash
+npx prisma migrate dev
+```
+
+**O que faz:** 
+- Cria uma nova migration baseada nas alterações do `schema.prisma`
+- Aplica a migration no banco de dados de desenvolvimento
+- Gera automaticamente o Prisma Client atualizado
+
+**Quando usar:** Execute este comando sempre que modificar o `schema.prisma` (adicionar, alterar ou remover models/campos) para sincronizar as alterações com o banco de dados.
+
+**Observação:** Este comando solicita um nome descritivo para a migration (ex: `create_users_table`, `add_email_to_users`).
+
+### Visualizar e editar dados com Prisma Studio
+
+```bash
+npx prisma studio
+```
+
+**O que faz:** 
+- Abre uma interface visual no navegador (geralmente em `http://localhost:5555`)
+- Permite visualizar, criar, editar e deletar registros do banco de dados
+- Oferece uma forma intuitiva de gerenciar dados sem escrever SQL
+
+**Quando usar:** 
+- Para visualizar rapidamente os dados durante o desenvolvimento
+- Para testar e validar operações no banco
+- Para fazer ajustes manuais nos dados sem precisar de queries SQL
