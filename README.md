@@ -10,6 +10,14 @@
 >  npm i fastify
 > ```
 
+> ```bash
+>  npm i dotenv
+> ```
+
+> ```bash
+>  npm i zod
+> ```
+
 ## Alteração necessária no `package.json`
 
 Para executar o projeto com TypeScript diretamente, altere a seguinte linha no arquivo `package.json`:
