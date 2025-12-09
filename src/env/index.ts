@@ -3,10 +3,9 @@ import { z } from 'zod'
 
 // TODO: COERCE CONVERTS ANY TYPE TO THE DESIRED TYPE
 const envSchema = z.object({
-  NODE_ENV: z
-    .enum(['dev', 'production', 'test'])
-    .default('dev'),
+  NODE_ENV: z.enum(['dev', 'production', 'test']).default('dev'),
   PORT: z.coerce.number().default(3333),
+  DATABASE_URL: z.string(),
 })
 const _env = envSchema.safeParse(process.env)
 

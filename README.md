@@ -42,6 +42,11 @@ npm i prisma -D
 npm i @prisma/client
 ```
 
+```bash
+npm npm i @types/pg -D 
+npm i @prisma/adapter-pg # Nova arquitetura do prisma 7
+```
+
 ## Alteração necessária no `package.json`
 
 Para executar o projeto com TypeScript diretamente, altere a seguinte linha no arquivo `package.json`:
