@@ -18,6 +18,23 @@
 >  npm i zod
 > ```
 
+> ```bash
+>  npm i eslint -D 
+> ```
+
+> ```bash
+>  npm i eslint-config-prettier -D 
+> ```
+
+> ```bash
+>  npm i eslint-plugin-prettier -D 
+> ```
+
+> ```bash
+>  npm i typescript-eslint -D 
+> ```
+
+
 ## Alteração necessária no `package.json`
 
 Para executar o projeto com TypeScript diretamente, altere a seguinte linha no arquivo `package.json`:
