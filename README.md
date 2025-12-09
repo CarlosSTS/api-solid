@@ -81,3 +81,16 @@ Após criar ou localizar o arquivo `tsconfig.json`, modifique as seguintes propr
 
 - Permite importar arquivos TypeScript sem especificar extensões `.ts` ou `.js`
 - `target: ES2022` gera código moderno com boa compatibilidade (Node.js 18+), suportando recursos como top-level await e private fields
+
+### Configurando Path Aliases
+
+Para facilitar os imports e evitar caminhos relativos longos como `../../../`, adicione as seguintes propriedades no `tsconfig.json`:
+
+```json
+"baseUrl": "./",
+"paths": {
+  "@/*": ["./src/*"]
+}
+```
+
+**Benefício:** Torna os imports mais limpos, legíveis e fáceis de manter, independente da profundidade do arquivo. 
