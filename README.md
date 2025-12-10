@@ -279,7 +279,6 @@ Response HTTP 201 Created
 - **Dependency Inversion**: Use Cases dependem de abstrações (interfaces), não de implementações concretas
 - **Reusabilidade**: Use Cases podem ser utilizados por diferentes controllers
 
-
 ## Guia de Desenvolvimento: Como Criar Novos Endpoints
 
 Siga este fluxo de desenvolvimento **bottom-up** (de baixo para cima) para garantir código testável e bem estruturado:
@@ -291,16 +290,18 @@ Siga este fluxo de desenvolvimento **bottom-up** (de baixo para cima) para garan
 **Arquivo:** `src/use-cases/NOME_DO_CASO_DE_USO.ts`
 
 **Responsabilidades:**
+
 - Definir interfaces de Request e Response
 - Implementar regras de negócio
 - Utilizar repository através de injeção de dependência
 - Lançar erros de domínio específicos
 
 **Exemplo:**
+
 ```typescript
 export class RegisterUseCase {
   constructor(private usersRepository: UserRepository) {}
-  
+
   async execute({ name, email, password }: RegisterUseCaseRequest) {
     // Lógica de negócio aqui
   }
@@ -314,16 +315,19 @@ export class RegisterUseCase {
 **Arquivo:** `src/use-cases/NOME_DO_CASO_DE_USO.spec.ts`
 
 **O que testar:**
+
 - ✅ **Cenários de sucesso**: Validar retorno esperado
 - ❌ **Cenários de erro**: Validar exceções lançadas
 - 🔀 **Casos extremos**: Testar edge cases
 
 **Benefícios:**
+
 - Garante que a lógica funciona antes de criar a infraestrutura
 - Usa repositories in-memory (mock) para testes rápidos
 - Facilita refatoração com confiança
 
 **Exemplo:**
+
 ```typescript
 describe('Register Use Case', () => {
   it('should be able to register', async () => { ... })
@@ -333,28 +337,74 @@ describe('Register Use Case', () => {
 
 ---
 
-### 3️⃣ Controller (Camada HTTP)
+### 3️⃣ Factory (Composição de Dependências)
+
+**Por quê usar Factories?** Centraliza a criação e composição dos Use Cases com suas dependências, aplicando o padrão **Factory Pattern** para simplificar a instanciação nos controllers.
+
+**Arquivo:** `src/use-cases/factories/make-NOME_DO_CASO_DE_USO.ts`
+
+**Responsabilidades:**
+
+- Instanciar o repository concreto (ex: PrismaUsersRepository)
+- Instanciar o use case injetando as dependências
+- Retornar o use case pronto para uso
+
+**Exemplo:**
+
+```typescript
+import { PrismaUsersRepository } from '@/repositories/prisma/prisma-users-repository'
+import { RegisterUseCase } from '../register'
+
+export function makeRegisterUseCase() {
+  const usersRepository = new PrismaUsersRepository()
+  const registerUseCase = new RegisterUseCase(usersRepository)
+
+  return registerUseCase
+}
+```
+
+**Vantagens:**
+
+- **DRY**: Evita duplicação de código de instanciação
+- **Manutenibilidade**: Mudanças nas dependências ficam centralizadas
+- **Testabilidade**: Controllers ficam mais limpos e focados
+- **Escalabilidade**: Facilita adicionar novas dependências ao use case
+
+---
+
+### 4️⃣ Controller (Camada HTTP)
 
 **Arquivo:** `src/http/controllers/NOME_DO_CASO_DE_USO.ts`
 
 **Responsabilidades:**
+
 - Validar dados da requisição (com Zod)
-- Instanciar repository e use case
+- Utilizar a factory para obter o use case
 - Executar o use case
 - Tratar erros e retornar respostas HTTP adequadas
 
 **Exemplo:**
+
 ```typescript
+import { makeRegisterUseCase } from '@/use-cases/factories/make-register-use-case'
+
 export async function register(request: FastifyRequest, reply: FastifyReply) {
   // 1. Validar body
   const { name, email, password } = registerBodySchema.parse(request.body)
-  
-  // 2. Instanciar dependências
-  const usersRepository = new PrismaUsersRepository()
-  const registerUseCase = new RegisterUseCase(usersRepository)
-  
+
+  // 2. Obter use case da factory
+  const registerUseCase = makeRegisterUseCase()
+
   // 3. Executar e tratar resposta
-  await registerUseCase.execute({ name, email, password })
+  try {
+    await registerUseCase.execute({ name, email, password })
+  } catch (error) {
+    if (error instanceof UserAlreadyExistsError) {
+      return reply.status(409).send({ message: error.message })
+    }
+    throw error
+  }
+
   return reply.status(201).send()
 }
 ```
@@ -366,10 +416,12 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
 **Arquivo:** `src/http/routes.ts`
 
 **Responsabilidade:**
+
 - Declarar o endpoint (método HTTP + path)
 - Conectar a rota ao controller correspondente
 
 **Exemplo:**
+
 ```typescript
 export async function appRoutes(app: FastifyInstance) {
   app.post('/users', register)
@@ -386,9 +438,10 @@ Ao criar uma nova funcionalidade, siga esta ordem:
 - [ ] 2. Implementar repository in-memory (se necessário)
 - [ ] 3. Escrever testes unitários (sucesso e falha)
 - [ ] 4. Garantir que todos os testes passam
-- [ ] 5. Criar controller com validações
-- [ ] 6. Adicionar rota no arquivo de rotas
-- [ ] 7. Testar endpoint com cliente HTTP (Insomnia, Postman, etc.)
+- [ ] 5. Criar Factory para composição de dependências
+- [ ] 6. Criar Controller com validações
+- [ ] 7. Adicionar rota no arquivo de rotas
+- [ ] 8. Testar endpoint com cliente HTTP (Insomnia, Postman, etc.)
 
 ---
 
