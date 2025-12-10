@@ -2,8 +2,7 @@ import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-user
 import { AuthenticateUseCase } from '@/use-cases/authenticate'
 import { InvalidCredentialsError } from '@/use-cases/errors/invalid-credentials-error'
 import { hash } from 'bcryptjs'
-import { beforeEach } from 'node:test'
-import { expect, describe, it } from 'vitest'
+import { expect, describe, it, beforeEach } from 'vitest'
 
 //  System Under Test (SUT)
 
@@ -15,6 +14,7 @@ describe('Authenticate Use Case', () => {
     usersRepository = new InMemoryUsersRepository()
     sut = new AuthenticateUseCase(usersRepository)
   })
+
   it('should be able to authenticate', async () => {
     await usersRepository.create({
       name: 'John Doe',
