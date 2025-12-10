@@ -280,10 +280,121 @@ Response HTTP 201 Created
 - **Reusabilidade**: Use Cases podem ser utilizados por diferentes controllers
 
 
-## Instruções de escrita
+## Guia de Desenvolvimento: Como Criar Novos Endpoints
 
-- Começe pelos casos de uso (use-cases) pois ele descreve a funcionalidade no seu nivel mais baixo da aplicação e é possivel gerar testes unitarios desde o inicio.
-- Sempre comece de baixo para cima em uma aplicação
+Siga este fluxo de desenvolvimento **bottom-up** (de baixo para cima) para garantir código testável e bem estruturado:
 
+### 1️⃣ Use Case (Lógica de Negócio)
 
-use-cases_NOME_DO_CASO_DE_USO.ts
+**Por quê começar aqui?** O Use Case representa o núcleo da funcionalidade, isolado de detalhes de infraestrutura, permitindo testes unitários desde o início.
+
+**Arquivo:** `src/use-cases/NOME_DO_CASO_DE_USO.ts`
+
+**Responsabilidades:**
+- Definir interfaces de Request e Response
+- Implementar regras de negócio
+- Utilizar repository através de injeção de dependência
+- Lançar erros de domínio específicos
+
+**Exemplo:**
+```typescript
+export class RegisterUseCase {
+  constructor(private usersRepository: UserRepository) {}
+  
+  async execute({ name, email, password }: RegisterUseCaseRequest) {
+    // Lógica de negócio aqui
+  }
+}
+```
+
+---
+
+### 2️⃣ Testes Unitários
+
+**Arquivo:** `src/use-cases/NOME_DO_CASO_DE_USO.spec.ts`
+
+**O que testar:**
+- ✅ **Cenários de sucesso**: Validar retorno esperado
+- ❌ **Cenários de erro**: Validar exceções lançadas
+- 🔀 **Casos extremos**: Testar edge cases
+
+**Benefícios:**
+- Garante que a lógica funciona antes de criar a infraestrutura
+- Usa repositories in-memory (mock) para testes rápidos
+- Facilita refatoração com confiança
+
+**Exemplo:**
+```typescript
+describe('Register Use Case', () => {
+  it('should be able to register', async () => { ... })
+  it('should not register with duplicate email', async () => { ... })
+})
+```
+
+---
+
+### 3️⃣ Controller (Camada HTTP)
+
+**Arquivo:** `src/http/controllers/NOME_DO_CASO_DE_USO.ts`
+
+**Responsabilidades:**
+- Validar dados da requisição (com Zod)
+- Instanciar repository e use case
+- Executar o use case
+- Tratar erros e retornar respostas HTTP adequadas
+
+**Exemplo:**
+```typescript
+export async function register(request: FastifyRequest, reply: FastifyReply) {
+  // 1. Validar body
+  const { name, email, password } = registerBodySchema.parse(request.body)
+  
+  // 2. Instanciar dependências
+  const usersRepository = new PrismaUsersRepository()
+  const registerUseCase = new RegisterUseCase(usersRepository)
+  
+  // 3. Executar e tratar resposta
+  await registerUseCase.execute({ name, email, password })
+  return reply.status(201).send()
+}
+```
+
+---
+
+### 4️⃣ Rota (Exposição do Endpoint)
+
+**Arquivo:** `src/http/routes.ts`
+
+**Responsabilidade:**
+- Declarar o endpoint (método HTTP + path)
+- Conectar a rota ao controller correspondente
+
+**Exemplo:**
+```typescript
+export async function appRoutes(app: FastifyInstance) {
+  app.post('/users', register)
+}
+```
+
+---
+
+### 📋 Checklist de Implementação
+
+Ao criar uma nova funcionalidade, siga esta ordem:
+
+- [ ] 1. Criar Use Case com interfaces tipadas
+- [ ] 2. Implementar repository in-memory (se necessário)
+- [ ] 3. Escrever testes unitários (sucesso e falha)
+- [ ] 4. Garantir que todos os testes passam
+- [ ] 5. Criar controller com validações
+- [ ] 6. Adicionar rota no arquivo de rotas
+- [ ] 7. Testar endpoint com cliente HTTP (Insomnia, Postman, etc.)
+
+---
+
+### 💡 Vantagens desta Abordagem
+
+- **Test-Driven**: Testes são escritos antes da infraestrutura
+- **Desacoplamento**: Use Cases não conhecem detalhes HTTP
+- **Confiabilidade**: Cada camada tem sua responsabilidade clara
+- **Manutenibilidade**: Bugs são mais fáceis de rastrear e corrigir
