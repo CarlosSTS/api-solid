@@ -172,3 +172,96 @@ npx prisma studio
 - Para visualizar rapidamente os dados durante o desenvolvimento
 - Para testar e validar operações no banco
 - Para fazer ajustes manuais nos dados sem precisar de queries SQL
+
+
+## Estrutura do Projeto
+
+### Arquitetura de Camadas
+
+O projeto segue os princípios SOLID e uma arquitetura em camadas bem definida:
+
+```
+HTTP Layer (Rotas e Controllers)
+         ↓
+Use Cases (Regras de Negócio)
+         ↓
+Repositories (Abstração de Dados)
+         ↓
+Database (Prisma ORM)
+```
+
+### Fluxo de Comunicação dos Endpoints
+
+#### 1. **Rotas** (`src/http/routes.ts`)
+Define os endpoints disponíveis na API:
+
+```typescript
+app.post('/users', register)
+```
+
+#### 2. **Controllers** (`src/http/controllers/`)
+Recebem as requisições HTTP, validam os dados e coordenam a execução:
+
+```typescript
+// register.ts
+- Valida o body da requisição com Zod
+- Instancia o Repository
+- Instancia o Use Case
+- Executa a lógica de negócio
+- Trata erros e retorna a resposta HTTP
+```
+
+#### 3. **Use Cases** (`src/use-cases/`)
+Contêm a lógica de negócio da aplicação:
+
+```typescript
+// register.ts
+- Recebe os dados validados
+- Aplica regras de negócio (ex: verificar email duplicado)
+- Executa operações através do Repository
+- Retorna o resultado
+```
+
+#### 4. **Repositories** (`src/repositories/`)
+Abstraem o acesso aos dados:
+
+```typescript
+// users-repository.ts (Interface)
+- Define o contrato dos métodos de acesso a dados
+
+// prisma-users-repository.ts (Implementação)
+- Implementa os métodos usando Prisma ORM
+- Executa queries no banco de dados
+```
+
+### Exemplo Prático: Endpoint `POST /users`
+
+```
+Cliente HTTP
+    ↓
+[POST /users] → routes.ts
+    ↓
+register() → controllers/register.ts
+    ↓ (valida dados com Zod)
+    ↓ (instancia PrismaUsersRepository)
+    ↓ (instancia RegisterUseCase)
+    ↓
+RegisterUseCase.execute()
+    ↓ (verifica email duplicado)
+    ↓ (hash da senha)
+    ↓
+usersRepository.create()
+    ↓
+Prisma ORM → Database
+    ↓
+Response HTTP 201 Created
+```
+
+### Benefícios desta Arquitetura
+
+- **Separação de Responsabilidades**: Cada camada tem uma função específica
+- **Testabilidade**: Use Cases podem ser testados isoladamente
+- **Manutenibilidade**: Mudanças em uma camada não afetam as outras
+- **Dependency Inversion**: Use Cases dependem de abstrações (interfaces), não de implementações concretas
+- **Reusabilidade**: Use Cases podem ser utilizados por diferentes controllers
+
