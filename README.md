@@ -43,7 +43,7 @@ npm i @prisma/client
 ```
 
 ```bash
-npm npm i @types/pg -D 
+npm npm i @types/pg -D
 npm i @prisma/adapter-pg # Nova arquitetura do prisma 7
 ```
 
@@ -57,6 +57,10 @@ npm i @types/bcryptjs -D
 
 ```bash
 npm i vitest vite-tsconfig-paths -D
+```
+
+```bash
+npm i @vitest/coverage-v8 -D
 ```
 
 ## Alteração necessária no `package.json`
@@ -148,7 +152,8 @@ npx prisma generate
 npx prisma migrate dev
 ```
 
-**O que faz:** 
+**O que faz:**
+
 - Cria uma nova migration baseada nas alterações do `schema.prisma`
 - Aplica a migration no banco de dados de desenvolvimento
 - Gera automaticamente o Prisma Client atualizado
@@ -163,16 +168,17 @@ npx prisma migrate dev
 npx prisma studio
 ```
 
-**O que faz:** 
+**O que faz:**
+
 - Abre uma interface visual no navegador (geralmente em `http://localhost:5555`)
 - Permite visualizar, criar, editar e deletar registros do banco de dados
 - Oferece uma forma intuitiva de gerenciar dados sem escrever SQL
 
-**Quando usar:** 
+**Quando usar:**
+
 - Para visualizar rapidamente os dados durante o desenvolvimento
 - Para testar e validar operações no banco
 - Para fazer ajustes manuais nos dados sem precisar de queries SQL
-
 
 ## Estrutura do Projeto
 
@@ -193,6 +199,7 @@ Database (Prisma ORM)
 ### Fluxo de Comunicação dos Endpoints
 
 #### 1. **Rotas** (`src/http/routes.ts`)
+
 Define os endpoints disponíveis na API:
 
 ```typescript
@@ -200,6 +207,7 @@ app.post('/users', register)
 ```
 
 #### 2. **Controllers** (`src/http/controllers/`)
+
 Recebem as requisições HTTP, validam os dados e coordenam a execução:
 
 ```typescript
@@ -212,6 +220,7 @@ Recebem as requisições HTTP, validam os dados e coordenam a execução:
 ```
 
 #### 3. **Use Cases** (`src/use-cases/`)
+
 Contêm a lógica de negócio da aplicação:
 
 ```typescript
@@ -223,6 +232,7 @@ Contêm a lógica de negócio da aplicação:
 ```
 
 #### 4. **Repositories** (`src/repositories/`)
+
 Abstraem o acesso aos dados:
 
 ```typescript
@@ -264,4 +274,3 @@ Response HTTP 201 Created
 - **Manutenibilidade**: Mudanças em uma camada não afetam as outras
 - **Dependency Inversion**: Use Cases dependem de abstrações (interfaces), não de implementações concretas
 - **Reusabilidade**: Use Cases podem ser utilizados por diferentes controllers
-

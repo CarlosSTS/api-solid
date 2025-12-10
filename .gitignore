@@ -8,6 +8,9 @@ build
 .vscode
 .idea
 *.log
-coverage
+
 dist
 .cache
+
+# Testing
+coverage
