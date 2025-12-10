@@ -1,9 +1,19 @@
-import { Prisma, type User } from '@/../generated/prisma/client'
+import { Prisma, type User } from 'generated/prisma/client'
 import type { UsersRepository } from '../users-repository'
 
 // In-memory Partern - used for tests
 export class InMemoryUsersRepository implements UsersRepository {
   public items: User[] = []
+
+  async findById(id: string) {
+    const user = this.items.find((item) => item.id === id)
+
+    if (!user) {
+      return null
+    }
+
+    return user
+  }
 
   async create(data: Prisma.UserCreateInput) {
     const user = {
