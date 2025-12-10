@@ -47,6 +47,14 @@ npm npm i @types/pg -D
 npm i @prisma/adapter-pg # Nova arquitetura do prisma 7
 ```
 
+```bash
+npm i bcryptjs
+```
+
+```bash
+npm i @types/bcryptjs -D
+```
+
 ## Alteração necessária no `package.json`
 
 Para executar o projeto com TypeScript diretamente, altere a seguinte linha no arquivo `package.json`:
