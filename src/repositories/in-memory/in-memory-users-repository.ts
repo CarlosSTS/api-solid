@@ -1,8 +1,8 @@
 import { Prisma, type User } from '@/../generated/prisma/client'
-import type { UserRepository } from '../users-repository'
+import type { UsersRepository } from '../users-repository'
 
 // In-memory Partern - used for tests
-export class InMemoryUsersRepository implements UserRepository {
+export class InMemoryUsersRepository implements UsersRepository {
   public items: User[] = []
 
   async create(data: Prisma.UserCreateInput) {

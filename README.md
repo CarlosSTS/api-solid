@@ -278,3 +278,12 @@ Response HTTP 201 Created
 - **Manutenibilidade**: Mudanças em uma camada não afetam as outras
 - **Dependency Inversion**: Use Cases dependem de abstrações (interfaces), não de implementações concretas
 - **Reusabilidade**: Use Cases podem ser utilizados por diferentes controllers
+
+
+## Instruções de escrita
+
+- Começe pelos casos de uso (use-cases) pois ele descreve a funcionalidade no seu nivel mais baixo da aplicação e é possivel gerar testes unitarios desde o inicio.
+- Sempre comece de baixo para cima em uma aplicação
+
+
+use-cases_NOME_DO_CASO_DE_USO.ts

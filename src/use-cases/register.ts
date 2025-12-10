@@ -1,4 +1,4 @@
-import type { UserRepository } from '@/repositories/users-repository'
+import type { UsersRepository } from '@/repositories/users-repository'
 import { hash } from 'bcryptjs'
 import { UserAlreadyExistsError } from './errors/user-already-exists-error'
 import type { User } from 'generated/prisma/client'
@@ -17,7 +17,7 @@ interface RegisterUseCaseResponse {
 // D - Dependency Inversion Principle
 
 export class RegisterUseCase {
-  constructor(private usersRepository: UserRepository) {}
+  constructor(private usersRepository: UsersRepository) {}
 
   async execute({
     name,
