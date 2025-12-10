@@ -63,6 +63,10 @@ npm i vitest vite-tsconfig-paths -D
 npm i @vitest/coverage-v8 -D
 ```
 
+```bash
+npm i -D @vitest/ui
+```
+
 ## Alteração necessária no `package.json`
 
 Para executar o projeto com TypeScript diretamente, altere a seguinte linha no arquivo `package.json`:
