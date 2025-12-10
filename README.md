@@ -67,6 +67,10 @@ npm i @vitest/coverage-v8 -D
 npm i -D @vitest/ui
 ```
 
+```bash
+npm i @fastify/jwt
+```
+
 ## Alteração necessária no `package.json`
 
 Para executar o projeto com TypeScript diretamente, altere a seguinte linha no arquivo `package.json`:
