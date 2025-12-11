@@ -3,7 +3,6 @@ import { appRoutes } from './http/routes'
 import { ZodError, z } from 'zod'
 import { env } from './env'
 import fastifyJwt from '@fastify/jwt'
-
 export const app = fastify()
 
 app.register(fastifyJwt, {
