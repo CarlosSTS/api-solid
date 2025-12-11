@@ -23,6 +23,7 @@ export default [
           semi: false,
         },
       ],
+      '@typescript-eslint/no-unused-vars': 'warn',
     },
   },
 ]
