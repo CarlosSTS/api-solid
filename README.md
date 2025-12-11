@@ -72,7 +72,11 @@ npm i @fastify/jwt
 ```
 
 ```bash
-npm i @fastify/cookie
+ npm i supertest -D
+```
+
+```bash
+npm i @types/supertest -D
 ```
 
 ## Alteração necessária no `package.json`
