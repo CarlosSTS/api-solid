@@ -463,3 +463,56 @@ Ao criar uma nova funcionalidade, siga esta ordem:
 - **Desacoplamento**: Use Cases não conhecem detalhes HTTP
 - **Confiabilidade**: Cada camada tem sua responsabilidade clara
 - **Manutenibilidade**: Bugs são mais fáceis de rastrear e corrigir
+
+
+## Copiar Projeto
+
+Caso você queira apenas copiar o projeto e criar um novo, siga esses passos:
+
+### Pré-requisitos
+- Node.js 18+ instalado
+- Docker e Docker Compose instalados e rodando
+
+### Passo a Passo
+
+**1. Inicializar novo projeto Node.js**
+```bash
+npm init -y
+```
+
+**2. Copiar arquivos do projeto**
+- Copie todos os arquivos do projeto para sua pasta
+- ⚠️ **Importante:** Modifique o nome do projeto em seu `package.json` e o campo `name` conforme necessário
+
+**3. Instalar dependências**
+```bash
+npm i
+```
+
+**4. Configurar variáveis de ambiente**
+- Crie ou modifique o arquivo `.env` na raiz do projeto
+- Ajuste as variáveis conforme seu ambiente (especialmente `DATABASE_URL`)
+
+**5. Configurar Docker**
+- Modifique o arquivo `docker-compose.yml` se necessário (portas, versões, etc.)
+
+**6. Iniciar containers Docker**
+```bash
+docker compose up -d
+```
+> ℹ️ Aguarde alguns segundos para o banco de dados ficar pronto
+
+**7. Configurar banco de dados e Prisma**
+```bash
+npx prisma migrate deploy
+npx prisma generate
+```
+> Este comando aplica todas as migrations e gera os tipos do Prisma Client
+
+**8. Executar testes**
+```bash
+npm run test
+```
+
+### ✅ Validação Final
+Se todos os testes passarem, seu projeto está totalmente configurado e pronto para desenvolvimento!
