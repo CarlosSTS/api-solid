@@ -79,7 +79,9 @@ npm i @fastify/jwt
 npm i @types/supertest -D
 ```
 
-## Alteração necessária no `package.json`
+```bash
+npm i @fastify/cookie
+```# Alteração necessária no `package.json`
 
 Para executar o projeto com TypeScript diretamente, altere a seguinte linha no arquivo `package.json`:
 
