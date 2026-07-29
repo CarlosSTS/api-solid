@@ -5,10 +5,15 @@
     // "rootDir": "./src",
     // "outDir": "./dist",
 
+    "paths": {
+      "@/*": ["./src/*"],
+      "generated/*": ["./generated/*"]
+    },
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "nodenext",
-    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "target": "ES2022",
     "types": [],
     // For nodejs:
     // "lib": ["esnext"],
