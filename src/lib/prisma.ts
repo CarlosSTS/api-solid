@@ -5,9 +5,14 @@ import { env } from '../env'
 
 const connectionString = env.DATABASE_URL
 
-const adapter = new PrismaPg({
-  connectionString,
-})
+const schema = new URL(connectionString).searchParams.get('schema')
+
+const adapter = new PrismaPg(
+  {
+    connectionString,
+  },
+  schema ? { schema } : {},
+)
 
 export const prisma = new PrismaClient({
   adapter,
