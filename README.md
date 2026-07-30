@@ -1,3 +1,27 @@
+<h1 align="center">API SOLID</h1>
+
+<p align="center">
+  API REST construída com <strong>Node.js</strong>, <strong>Fastify</strong>, <strong>Prisma</strong> e princípios <strong>SOLID</strong>.
+</p>
+
+<p align="center">
+  <img alt="Version" src="https://img.shields.io/badge/version-2.0.0-blue?style=for-the-badge" />
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge" /></a>
+</p>
+
+<p align="center">
+  <img alt="Node.js" src="https://img.shields.io/badge/Node.js-24-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.7-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
+  <img alt="Fastify" src="https://img.shields.io/badge/Fastify-5.10-000000?style=for-the-badge&logo=fastify&logoColor=white" />
+  <img alt="Prisma" src="https://img.shields.io/badge/Prisma-7.9-2D3748?style=for-the-badge&logo=prisma&logoColor=white" />
+  <img alt="PostgreSQL" src="https://img.shields.io/badge/PostgreSQL-16-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" />
+  <img alt="Zod" src="https://img.shields.io/badge/Zod-4.4-3E67B1?style=for-the-badge&logo=zod&logoColor=white" />
+  <img alt="Vitest" src="https://img.shields.io/badge/Vitest-4.1-6E9F18?style=for-the-badge&logo=vitest&logoColor=white" />
+  <img alt="Docker" src="https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
+</p>
+
+---
+
 # Configuração do Projeto
 
 ## Dependências
@@ -56,8 +80,10 @@ npm i @types/bcryptjs -D
 ```
 
 ```bash
-npm i vitest vite-tsconfig-paths -D
+npm i vitest -D
 ```
+
+> **Nota:** No Vite 8+ os path aliases do `tsconfig` são resolvidos nativamente via `resolve.tsconfigPaths: true`. O plugin `vite-tsconfig-paths` não é mais necessário.
 
 ```bash
 npm i @vitest/coverage-v8 -D
@@ -468,55 +494,66 @@ Ao criar uma nova funcionalidade, siga esta ordem:
 - **Confiabilidade**: Cada camada tem sua responsabilidade clara
 - **Manutenibilidade**: Bugs são mais fáceis de rastrear e corrigir
 
-
 ## Copiar Projeto
 
 Caso você queira apenas copiar o projeto e criar um novo, siga esses passos:
 
 ### Pré-requisitos
+
 - Node.js 18+ instalado
 - Docker e Docker Compose instalados e rodando
 
 ### Passo a Passo
 
 **1. Inicializar novo projeto Node.js**
+
 ```bash
 npm init -y
 ```
 
 **2. Copiar arquivos do projeto**
+
 - Copie todos os arquivos do projeto para sua pasta
 - ⚠️ **Importante:** Modifique o nome do projeto em seu `package.json` e o campo `name` conforme necessário
 
 **3. Instalar dependências**
+
 ```bash
 npm i
 ```
 
 **4. Configurar variáveis de ambiente**
+
 - Crie ou modifique o arquivo `.env` na raiz do projeto
 - Ajuste as variáveis conforme seu ambiente (especialmente `DATABASE_URL`)
 
 **5. Configurar Docker**
+
 - Modifique o arquivo `docker-compose.yml` se necessário (portas, versões, etc.)
 
 **6. Iniciar containers Docker**
+
 ```bash
 docker compose up -d
 ```
+
 > ℹ️ Aguarde alguns segundos para o banco de dados ficar pronto
 
 **7. Configurar banco de dados e Prisma**
+
 ```bash
 npx prisma migrate deploy
 npx prisma generate
 ```
+
 > Este comando aplica todas as migrations e gera os tipos do Prisma Client
 
 **8. Executar testes**
+
 ```bash
 npm run test
 ```
 
 ### ✅ Validação Final
+
 Se todos os testes passarem, seu projeto está totalmente configurado e pronto para desenvolvimento!
