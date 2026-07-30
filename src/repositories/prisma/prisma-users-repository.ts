@@ -1,7 +1,8 @@
-import { prisma } from '@/lib/prisma'
-import { Prisma } from 'generated/prisma/client'
-import type { UsersRepository } from '../users-repository'
 import type { User } from 'generated/prisma/browser'
+import { Prisma } from 'generated/prisma/client'
+
+import { prisma } from '@/lib/prisma'
+import type { UsersRepository } from '../users-repository'
 
 export class PrismaUsersRepository implements UsersRepository {
   findById(id: string): Promise<User | null> {

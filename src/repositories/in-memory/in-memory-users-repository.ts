@@ -1,7 +1,8 @@
-import { Prisma, type User } from 'generated/prisma/client'
-import type { UsersRepository } from '../users-repository'
 // Internal Node.js module
 import { randomUUID } from 'node:crypto'
+import { Prisma, type User } from 'generated/prisma/client'
+
+import type { UsersRepository } from '../users-repository'
 
 // In-memory Partern - used for tests
 export class InMemoryUsersRepository implements UsersRepository {
