@@ -10,6 +10,12 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/CarlosSTS/api-solid/actions/workflows/ci.yml">
+    <img alt="CI" src="https://github.com/CarlosSTS/api-solid/actions/workflows/ci.yml/badge.svg?branch=master" />
+  </a>
+</p>
+
+<p align="center">
   <img alt="Node.js" src="https://img.shields.io/badge/Node.js-24-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.7-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
   <img alt="Fastify" src="https://img.shields.io/badge/Fastify-5.10-000000?style=for-the-badge&logo=fastify&logoColor=white" />
