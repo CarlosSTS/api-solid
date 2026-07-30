@@ -1,9 +1,10 @@
 import 'dotenv/config'
-import { PrismaPg } from '@prisma/adapter-pg'
-import { randomUUID } from 'node:crypto'
+
 import { execSync } from 'node:child_process'
-import type { Environment } from 'vitest/environments'
+import { randomUUID } from 'node:crypto'
+import { PrismaPg } from '@prisma/adapter-pg'
 import { PrismaClient } from 'generated/prisma/client'
+import type { Environment } from 'vitest/environments'
 
 function generateDatabaseURL(schema: string) {
   if (!process.env.DATABASE_URL) {
@@ -20,7 +21,7 @@ function generateDatabaseURL(schema: string) {
 export default <Environment>{
   name: 'prisma',
   viteEnvironment: 'ssr',
-  async setup() {
+  setup() {
     // Create a new schema for each test environment
     const schema = randomUUID()
     const databaseURL = generateDatabaseURL(schema)

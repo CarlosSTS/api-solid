@@ -1,17 +1,15 @@
-# docker run --name api-solid-pg -e POSTGRESQL_USERNAME=docker -e POSTGRESQL_PASSWORD=docker -e POSTGRESQL_DATABASE=apisolid -p 5433:5432 bitnamilegacy/postgresql:17
-
 services:
-  db:
-    image: bitnamilegacy/postgresql:17
-    container_name: api-solid-pg
-    environment:
-      POSTGRESQL_USERNAME: docker
-      POSTGRESQL_PASSWORD: docker
-      POSTGRESQL_DATABASE: apisolid
+  postgres:
+    container_name: ${POSTGRES_CONTAINER_NAME}
+    image: postgres
     ports:
-      - "5433:5432"
+      - "${POSTGRES_PORT}:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      PGDATA: /data/postgres # Pasta dentro do container para armazenar os dados do banco de dados
     volumes:
-      - pgdata:/var/lib/postgresql/data
-
-volumes:
-  pgdata: {}
+      - ./data/pg:/data/postgres # Pasta local para persistir os dados do banco de dados
+    env_file:
+      - .env

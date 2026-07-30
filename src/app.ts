@@ -1,9 +1,10 @@
-import fastify from 'fastify'
 import fastifyCookie from '@fastify/cookie'
-import { usersRoutes } from './http/controllers/users/routes'
-import { ZodError, z } from 'zod'
-import { env } from './env'
 import fastifyJwt from '@fastify/jwt'
+import fastify from 'fastify'
+import { z, ZodError } from 'zod'
+
+import { env } from './env'
+import { usersRoutes } from './http/controllers/users/routes'
 export const app = fastify()
 
 app.register(fastifyJwt, {
